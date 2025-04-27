@@ -1,0 +1,9 @@
+# Ignore Visual Studio build and config files
+*.sln
+*.vcxproj*
+.vs/
+x64/
+Debug/
+Release/
+*.obj
+*.pdb
