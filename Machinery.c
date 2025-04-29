@@ -75,3 +75,33 @@ Machinery* restoreMachineryList(const char* filename) {
     printf("Machinery list restored from '%s'.\n", filename);
     return head;
 }
+float getValidatedFloat(const char* prompt) {
+    float value;
+    char input[50];
+    while (1) {
+        printf("%s", prompt);
+        fgets(input, sizeof(input), stdin);
+        if (sscanf(input, "%f", &value) == 1 && value >= 0)
+            return value;
+        printf("Invalid input. Please enter a non-negative number.\n");
+    }
+}
+
+int getValidatedYear(const char* prompt) {
+    int year;
+    char input[50];
+    while (1) {
+        printf("%s", prompt);
+        fgets(input, sizeof(input), stdin);
+        if (sscanf(input, "%d", &year) == 1 && year >= 1900 && year <= 2100)
+            return year;
+        printf("Invalid year. Please enter a value between 1900 and 2100.\n");
+    }
+}
+
+void getTrimmedInput(const char* prompt, char* buffer, int size) {
+    printf("%s", prompt);
+    fgets(buffer, size, stdin);
+    buffer[strcspn(buffer, "\n")] = 0; // remove newline
+}
+

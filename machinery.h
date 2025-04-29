@@ -26,5 +26,8 @@ void addMachinery(Machinery**, Machinery*);
 void displayAllMachinery(Machinery*);
 void saveMachineryList(Machinery* head, const char* filename);
 Machinery* restoreMachineryList(const char* filename);
+float getValidatedFloat(const char* prompt);
+int getValidatedYear(const char* prompt);
+void getTrimmedInput(const char* prompt, char* buffer, int size);
 
 #endif
