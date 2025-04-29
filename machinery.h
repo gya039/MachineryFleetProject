@@ -14,11 +14,14 @@ typedef struct Machinery {
     char model[MAX_STR_LENGTH];
     int yearOfManufacture;
     float cost;
+    float currentValuation;
+    float currentMileage;
+    char ownerName[MAX_STR_LENGTH];
     struct Machinery* next;
 } Machinery;
 
 // Function prototypes
-Machinery* createMachinery(char*, char*, char*, int, float);
+Machinery* createMachinery(char*, char*, char*, int, float, float, float, char*);
 void addMachinery(Machinery**, Machinery*);
 void displayAllMachinery(Machinery*);
 
