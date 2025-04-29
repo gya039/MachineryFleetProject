@@ -2,13 +2,16 @@
 #include "machinery.h"
 
 int main() {
-    Machinery* fleet = NULL;
+    Machinery* fleet = restoreMachineryList("fleet.txt");
 
     Machinery* m1 = createMachinery("CH1234", "Caterpillar", "ModelX", 2015, 50000.0, 35000.0, 12450.5, "John Deere");
     addMachinery(&fleet, m1);
 
     displayAllMachinery(fleet);
 
+    saveMachineryList(fleet, "fleet.txt");
+
     return 0;
 }
+
 

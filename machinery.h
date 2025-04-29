@@ -24,5 +24,7 @@ typedef struct Machinery {
 Machinery* createMachinery(char*, char*, char*, int, float, float, float, char*);
 void addMachinery(Machinery**, Machinery*);
 void displayAllMachinery(Machinery*);
+void saveMachineryList(Machinery* head, const char* filename);
+Machinery* restoreMachineryList(const char* filename);
 
 #endif
