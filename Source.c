@@ -2,6 +2,17 @@
 #include "machinery.h"
 
 int main() {
+
+    Login logins[MAX_USERS];
+    int loginCount = 0;
+    loadLogins(logins, &loginCount);
+
+    printf("Welcome to the Machinery Management System\n");
+
+    if (!authenticate(logins, loginCount)) {
+        printf("Too many failed login attempts. Exiting...\n");
+        return 0;
+    }
     Machinery* fleet = restoreMachineryList("fleet.txt");
 
     char chassis[MAX_STR_LENGTH];

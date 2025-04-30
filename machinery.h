@@ -6,7 +6,20 @@
 #include <stdlib.h>
 #include <string.h>
 
+#define USERNAME_LEN 7
+#define PASSWORD_LEN 7
+#define MAX_USERS 3
 #define MAX_STR_LENGTH 100
+
+typedef struct {
+    char username[USERNAME_LEN];
+    char password[PASSWORD_LEN];
+} Login;
+
+int authenticate(Login logins[], int count);
+void loadLogins(Login logins[], int* count);
+void getMaskedPassword(char* password);
+
 
 typedef struct Machinery {
     char chassisNumber[MAX_STR_LENGTH];
@@ -20,7 +33,7 @@ typedef struct Machinery {
     struct Machinery* next;
 } Machinery;
 
-// Function prototypes
+// Function 
 Machinery* createMachinery(char*, char*, char*, int, float, float, float, char*);
 void addMachinery(Machinery**, Machinery*);
 void displayAllMachinery(Machinery*);

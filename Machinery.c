@@ -1,4 +1,6 @@
 #include "machinery.h"
+#include <conio.h> // used this for _getch.
+
 
 Machinery* createMachinery(char* chassis, char* make, char* model, int year, float cost, float valuation, float mileage, char* ownerName) {
     Machinery* newMachinery = (Machinery*)malloc(sizeof(Machinery));
@@ -93,9 +95,9 @@ int getValidatedYear(const char* prompt) {
     while (1) {
         printf("%s", prompt);
         fgets(input, sizeof(input), stdin);
-        if (sscanf(input, "%d", &year) == 1 && year >= 1900 && year <= 2100)
+        if (sscanf(input, "%d", &year) == 1 && year >= 1900 && year <= 2025)
             return year;
-        printf("Invalid year. Please enter a value between 1900 and 2100.\n");
+        printf("Invalid year. Please enter a value between 1900 and 2025.\n");
     }
 }
 
@@ -103,5 +105,68 @@ void getTrimmedInput(const char* prompt, char* buffer, int size) {
     printf("%s", prompt);
     fgets(buffer, size, stdin);
     buffer[strcspn(buffer, "\n")] = 0; // remove newline
+}
+
+void getMaskedPassword(char* password) {
+    int i = 0;
+    char ch;
+    while ((ch = _getch()) != '\r' && i < PASSWORD_LEN - 1) {
+        if (ch == '\b' && i > 0) {
+            printf("\b \b");
+            i--;
+        }
+        else if (isprint(ch)) {
+            password[i++] = ch;
+            printf("*");
+        }
+    }
+    password[i] = '\0';
+    printf("\n");
+}
+
+void loadLogins(Login logins[], int* count) {
+    FILE* fp = fopen("login.txt", "r");
+    if (!fp) {
+        printf("Failed to open login.txt\n");
+        exit(1);
+    }
+
+    char user[USERNAME_LEN], pass[PASSWORD_LEN];
+    *count = 0;
+
+    while (fscanf(fp, "%6s %6s", user, pass) == 2 && *count < MAX_USERS) {
+        strcpy(logins[*count].username, user);
+        strcpy(logins[*count].password, pass);
+        (*count)++;
+    }
+
+    fclose(fp);
+}
+
+int authenticate(Login logins[], int count) {
+    char enteredUser[USERNAME_LEN];
+    char enteredPass[PASSWORD_LEN];
+    int attempts = 0;
+
+    while (attempts < 5) {
+        printf("\nUsername: ");
+        scanf("%6s", enteredUser);
+
+        printf("Password: ");
+        getMaskedPassword(enteredPass);
+
+        for (int i = 0; i < count; i++) {
+            if (strcmp(enteredUser, logins[i].username) == 0 &&
+                strcmp(enteredPass, logins[i].password) == 0) {
+                printf("Login successful.\n");
+                return 1;
+            }
+        }
+
+        printf("Invalid login. %d attempt(s) remaining.\n", 4 - attempts);
+        attempts++;
+    }
+
+    return 0;
 }
 
