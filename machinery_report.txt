@@ -1,0 +1,58 @@
+Chassis: 50asd | Make: Volvo | Model: Joe | Year: 2026 | Cost: 491232.00 | Valuation: 401294.00
+Mileage: 2500.00 | Next Service Mileage: 500.00
+Owner: Joe Randy | Email: joe@g.com | Phone: 083-155-4646
+Machine Type: Roller | Breakdown Experience: Less than five times
+
+Chassis: 0349ssdasd | Make: 240 | Model: 240F | Year: 20204 | Cost: 400000.00 | Valuation: 320000.00
+Mileage: 7000.00 | Next Service Mileage: 9000.00
+Owner: john john | Email: c@g.co | Phone: 03841-5124
+Machine Type: Crane | Breakdown Experience: Less than five times
+
+Chassis: 29312ASF | Make: Volvo | Model: Romeo | Year: 2013 | Cost: 200000.00 | Valuation: 120000.00
+Mileage: 329000.00 | Next Service Mileage: 350000.00
+Owner: John | Email: prok@gmail.com | Phone: 083-159-4123
+Machine Type: Tractor | Breakdown Experience: Never
+
+Chassis: 4023FAS | Make: Lamborghini | Model: Tracky | Year: 2023 | Cost: 29.00 | Valuation: 52194.00
+Mileage: 240.00 | Next Service Mileage: 2500.00
+Owner: Alex | Email: Alex@mail.com | Phone: 083-134-2339
+Machine Type: Crane | Breakdown Experience: Less than five times
+
+Chassis: 3293ASF | Make: Volvo | Model: 293ASD1 | Year: 2021 | Cost: 24000.00 | Valuation: 25000.00
+Mileage: 30.00 | Next Service Mileage: 3000.00
+Owner: John Pork | Email: JohnPork@gmail.com | Phone: 0831559324
+Machine Type: Crane | Breakdown Experience: Less than five times
+
+Chassis: 924askf | Make: asf | Model: asd | Year: 2014 | Cost: 23000.00 | Valuation: 2401.00
+Mileage: 2300.00 | Next Service Mileage: 2000.00
+Owner: joh | Email: joh@gmail.com | Phone: 083-159-2301
+Machine Type: Mixer | Breakdown Experience: More than five times
+
+Chassis: asid | Make: asd | Model: asd | Year: 2401 | Cost: 1340.00 | Valuation: 1239.00
+Mileage: 1500.00 | Next Service Mileage: 1230123.00
+Owner: yen ke | Email: y@g.com | Phone: 083-123-4192
+Machine Type: Crane | Breakdown Experience: Less than five times
+
+Chassis: asd9asf | Make: volv2 | Model: akfw | Year: 2014 | Cost: 2041.00 | Valuation: 1200.00
+Mileage: 4022.00 | Next Service Mileage: 4025.00
+Owner: joe | Email: joe@gmail.com | Phone: 083-4192-41924
+Machine Type: Mixer | Breakdown Experience: More than five times
+
+Chassis: 1230ASF | Make: Ford | Model: JoFod | Year: 2015 | Cost: 5.00 | Valuation: 200.00
+Mileage: 55000.00 | Next Service Mileage: 65000.00
+Owner: Joe Dunn | Email: JoeDunn@gmail.com | Phone: 083-150-2391
+Machine Type: Tractor | Breakdown Experience: More than five times
+
+
+----- Machine Performance Statistics -----
+22.22% of machines are Tractor
+0.00% of machines are Excavator
+11.11% of machines are Roller
+44.44% of machines are Crane
+22.22% of machines are Mixer
+
+----- Breakdown Levels -----
+11.11% of machines have no breakdowns.
+0.00% of machines have 1-2 breakdowns.
+55.56% of machines have 3-5 breakdowns.
+33.33% of machines have more than 5 breakdowns.

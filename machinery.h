@@ -33,7 +33,8 @@ typedef struct Machinery {
     struct Machinery* next;
 } Machinery;
 
-// Function 
+// Functions
+void clearConsole();
 Machinery* createMachinery(char*, char*, char*, int, float, float, float, char*);
 void addMachinery(Machinery**, Machinery*);
 void displayAllMachinery(Machinery*);
@@ -42,5 +43,9 @@ Machinery* restoreMachineryList(const char* filename);
 float getValidatedFloat(const char* prompt);
 int getValidatedYear(const char* prompt);
 void getTrimmedInput(const char* prompt, char* buffer, int size);
+Machinery* retrieveMachinery(Machinery* head, const char* chassis);
+void updateMachinery(Machinery* machine);
+void deleteMachinery(Machinery** head, const char* chassis);
+
 
 #endif

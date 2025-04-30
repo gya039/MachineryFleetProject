@@ -1,6 +1,8 @@
 #include "machinery.h"
-#include <conio.h> // used this for _getch.
+#include <conio.h> // used for _getch
+#include <ctype.h> // for isprint
 
+// === CORE LINKED LIST OPERATIONS ===
 
 Machinery* createMachinery(char* chassis, char* make, char* model, int year, float cost, float valuation, float mileage, char* ownerName) {
     Machinery* newMachinery = (Machinery*)malloc(sizeof(Machinery));
@@ -21,7 +23,76 @@ void addMachinery(Machinery** head, Machinery* newMachine) {
     *head = newMachine;
 }
 
+Machinery* retrieveMachinery(Machinery* head, const char* chassis) {
+    while (head != NULL) {
+        if (strcmp(head->chassisNumber, chassis) == 0) {
+            return head;
+        }
+        head = head->next;
+    }
+    return NULL;
+}
+
+void clearConsole() {
+#ifdef _WIN32
+    system("cls");
+#else
+    printf("\033[H\033[J");
+#endif
+}
+
+
+void updateMachinery(Machinery* machine) {
+    if (!machine) return;
+
+    char buffer[MAX_STR_LENGTH];
+    printf("Updating machine: %s\n", machine->chassisNumber);
+
+    getTrimmedInput("Enter new make: ", buffer, MAX_STR_LENGTH);
+    if (strlen(buffer) > 0) strcpy(machine->make, buffer);
+
+    getTrimmedInput("Enter new model: ", buffer, MAX_STR_LENGTH);
+    if (strlen(buffer) > 0) strcpy(machine->model, buffer);
+
+    machine->yearOfManufacture = getValidatedYear("Enter new year of manufacture: ");
+    machine->cost = getValidatedFloat("Enter new cost: ");
+    machine->currentValuation = getValidatedFloat("Enter new valuation: ");
+    machine->currentMileage = getValidatedFloat("Enter new mileage: ");
+
+    getTrimmedInput("Enter new owner name: ", buffer, MAX_STR_LENGTH);
+    if (strlen(buffer) > 0) strcpy(machine->ownerName, buffer);
+
+    printf("Machine updated successfully.\n");
+}
+
+void deleteMachinery(Machinery** head, const char* chassis) {
+    Machinery* current = *head;
+    Machinery* prev = NULL;
+
+    while (current != NULL) {
+        if (strcmp(current->chassisNumber, chassis) == 0) {
+            if (prev == NULL)
+                *head = current->next;
+            else
+                prev->next = current->next;
+
+            free(current);
+            printf("Machine with chassis number %s deleted.\n", chassis);
+            return;
+        }
+        prev = current;
+        current = current->next;
+    }
+
+    printf("Machine not found.\n");
+}
+
 void displayAllMachinery(Machinery* head) {
+    if (!head) {
+        printf("No machines found.\n");
+        return;
+    }
+
     Machinery* temp = head;
     while (temp != NULL) {
         printf("Chassis: %s | Make: %s | Model: %s | Year: %d\n",
@@ -31,6 +102,8 @@ void displayAllMachinery(Machinery* head) {
         temp = temp->next;
     }
 }
+
+// === FILE OPERATIONS ===
 
 void saveMachineryList(Machinery* head, const char* filename) {
     FILE* file = fopen(filename, "w");
@@ -77,6 +150,9 @@ Machinery* restoreMachineryList(const char* filename) {
     printf("Machinery list restored from '%s'.\n", filename);
     return head;
 }
+
+// === VALIDATION + HELPER INPUTS ===
+
 float getValidatedFloat(const char* prompt) {
     float value;
     char input[50];
@@ -104,8 +180,10 @@ int getValidatedYear(const char* prompt) {
 void getTrimmedInput(const char* prompt, char* buffer, int size) {
     printf("%s", prompt);
     fgets(buffer, size, stdin);
-    buffer[strcspn(buffer, "\n")] = 0; // remove newline
+    buffer[strcspn(buffer, "\n")] = 0;
 }
+
+// === LOGIN SYSTEM ===
 
 void getMaskedPassword(char* password) {
     int i = 0;
@@ -151,7 +229,7 @@ int authenticate(Login logins[], int count) {
     while (attempts < 5) {
         printf("\nUsername: ");
         scanf("%6s", enteredUser);
-
+        getchar(); // flush newline
         printf("Password: ");
         getMaskedPassword(enteredPass);
 
@@ -169,4 +247,3 @@ int authenticate(Login logins[], int count) {
 
     return 0;
 }
-
