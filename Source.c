@@ -68,23 +68,21 @@ int main() {
 
         case 3: {
             char chassis[MAX_STR_LENGTH];
+            printf("\nAvailable Chassis Numbers:\n");
+            displayChassisNumbers(fleet);
+
             getTrimmedInput("Enter chassis number to view: ", chassis, MAX_STR_LENGTH);
             Machinery* machine = retrieveMachinery(fleet, chassis);
-            if (machine) {
-                printf("Chassis: %s | Make: %s | Model: %s | Year: %d\n",
-                    machine->chassisNumber, machine->make, machine->model, machine->yearOfManufacture);
-                printf("Cost: %.2f | Valuation: %.2f | Mileage: %.2f | Owner: %s\n",
-                    machine->cost, machine->currentValuation, machine->currentMileage, machine->ownerName);
-            }
-            else {
-                printf("Machine not found.\n");
-            }
+            displayMachineDetails(machine);
             break;
         }
 
         case 4: {
             char chassis[MAX_STR_LENGTH];
+            printf("\nAvailable Chassis Numbers:\n");
+            displayChassisNumbers(fleet);
             getTrimmedInput("Enter chassis number to update: ", chassis, MAX_STR_LENGTH);
+
             Machinery* machine = retrieveMachinery(fleet, chassis);
             if (machine) {
                 updateMachinery(machine);
@@ -97,8 +95,18 @@ int main() {
 
         case 5: {
             char chassis[MAX_STR_LENGTH];
+            printf("\nAvailable Chassis Numbers:\n");
+            displayChassisNumbers(fleet);
             getTrimmedInput("Enter chassis number to delete: ", chassis, MAX_STR_LENGTH);
-            deleteMachinery(&fleet, chassis);
+
+            Machinery* machine = retrieveMachinery(fleet, chassis);
+            if (machine) {
+                deleteMachinery(&fleet, chassis);
+                printf("Machine with chassis number %s deleted.\n", chassis);
+            }
+            else {
+                printf("Machine not found.\n");
+            }
             break;
         }
 

@@ -1,8 +1,6 @@
 #include "machinery.h"
-#include <conio.h> // used for _getch
-#include <ctype.h> // for isprint
-
-// === CORE LINKED LIST OPERATIONS ===
+#include <conio.h> // used for _getcn.
+#include <ctype.h> 
 
 Machinery* createMachinery(char* chassis, char* make, char* model, int year, float cost, float valuation, float mileage, char* ownerName) {
     Machinery* newMachinery = (Machinery*)malloc(sizeof(Machinery));
@@ -43,26 +41,66 @@ void clearConsole() {
 
 
 void updateMachinery(Machinery* machine) {
-    if (!machine) return;
+    if (machine == NULL) return;
 
-    char buffer[MAX_STR_LENGTH];
-    printf("Updating machine: %s\n", machine->chassisNumber);
+    int updateChoice;
+    do {
+        printf("\nSelect the detail to update:\n");
+        printf("1) Update Mileage\n");
+        printf("2) Update Next Service Mileage\n");
+        printf("3) Update Owner Details\n");
+        printf("4) Update Valuation\n");
+        printf("0) Back to Menu\n");
+        printf("Enter your choice: ");
+        scanf("%d", &updateChoice);
+        getchar();
 
-    getTrimmedInput("Enter new make: ", buffer, MAX_STR_LENGTH);
-    if (strlen(buffer) > 0) strcpy(machine->make, buffer);
+        switch (updateChoice) {
+        case 1:
+            printf("Current Mileage: %.2f\n", machine->currentMileage);
+            printf("Enter new mileage: ");
+            validateFloatInput(&machine->currentMileage);
+            printf("Mileage updated successfully!\n");
+            break;
 
-    getTrimmedInput("Enter new model: ", buffer, MAX_STR_LENGTH);
-    if (strlen(buffer) > 0) strcpy(machine->model, buffer);
+        case 2:
+            printf("Current Next Service Mileage: %.2f\n", machine->nextServiceMileage);
+            printf("Enter new next service mileage: ");
+            validateFloatInput(&machine->nextServiceMileage);
+            printf("Next Service Mileage updated successfully!\n");
+            break;
 
-    machine->yearOfManufacture = getValidatedYear("Enter new year of manufacture: ");
-    machine->cost = getValidatedFloat("Enter new cost: ");
-    machine->currentValuation = getValidatedFloat("Enter new valuation: ");
-    machine->currentMileage = getValidatedFloat("Enter new mileage: ");
+        case 3:
+            printf("Current Owner Name: %s\n", machine->ownerName);
+            printf("Enter new Owner Name: ");
+            validateStringInput(machine->ownerName, MAX_STR_LENGTH);
 
-    getTrimmedInput("Enter new owner name: ", buffer, MAX_STR_LENGTH);
-    if (strlen(buffer) > 0) strcpy(machine->ownerName, buffer);
+            printf("Current Owner Phone: %s\n", machine->ownerPhoneNumber);
+            printf("Enter new Owner Phone: ");
+            validateStringInput(machine->ownerPhoneNumber, MAX_STR_LENGTH);
 
-    printf("Machine updated successfully.\n");
+            printf("Current Owner Email: %s\n", machine->ownerEmail);
+            printf("Enter new Owner Email: ");
+            validateStringInput(machine->ownerEmail, MAX_STR_LENGTH);
+
+            printf("Owner details updated successfully!\n");
+            break;
+
+        case 4:
+            printf("Current Valuation: %.2f\n", machine->currentValuation);
+            printf("Enter new valuation: ");
+            validateFloatInput(&machine->currentValuation);
+            printf("Valuation updated successfully!\n");
+            break;
+
+        case 0:
+            break;
+
+        default:
+            printf("Invalid choice. Please try again.\n");
+        }
+
+    } while (updateChoice != 0);
 }
 
 void deleteMachinery(Machinery** head, const char* chassis) {
@@ -101,6 +139,48 @@ void displayAllMachinery(Machinery* head) {
             temp->cost, temp->currentValuation, temp->currentMileage, temp->ownerName);
         temp = temp->next;
     }
+}
+
+void validateStringInput(char* input, int maxLength) {
+    char tempInput[256];
+
+    while (1) {
+        fgets(tempInput, sizeof(tempInput), stdin);
+        tempInput[strcspn(tempInput, "\n")] = 0;
+
+        if (strlen(tempInput) > maxLength) {
+            printf("Input too long! Please try again: ");
+        }
+        else if (strlen(tempInput) == 0) {
+            printf("Input cannot be empty. Please try again: ");
+        }
+        else {
+            strncpy(input, tempInput, maxLength);
+            break;
+        }
+    }
+}
+int validateFloatInput(float* input) {
+    char buffer[50];
+    char extra;
+    int valid = 0;
+
+    while (!valid) {
+        fgets(buffer, sizeof(buffer), stdin);
+        buffer[strcspn(buffer, "\n")] = 0;
+
+        if (sscanf(buffer, "%f %c", input, &extra) != 1) {
+            printf("Invalid input! Please enter a valid number: ");
+        }
+        else if (*input < 0) {
+            printf("Input cannot be negative! Please enter a valid number: ");
+        }
+        else {
+            valid = 1;
+        }
+    }
+
+    return 1;
 }
 
 // === FILE OPERATIONS ===
@@ -220,6 +300,28 @@ void loadLogins(Login logins[], int* count) {
 
     fclose(fp);
 }
+void displayMachineDetails(Machinery* machine) {
+    if (machine != NULL) {
+        printf("Chassis: %s | Make: %s | Model: %s | Year: %d\n",
+            machine->chassisNumber, machine->make, machine->model, machine->yearOfManufacture);
+        printf("Cost: %.2f | Valuation: %.2f | Mileage: %.2f | Owner: %s\n\n",
+            machine->cost, machine->currentValuation, machine->currentMileage, machine->ownerName);
+    }
+    else {
+        printf("Machine not found.\n");
+    }
+}
+
+void displayChassisNumbers(Machinery* head) {
+    Machinery* temp = head;
+    printf("\nAvailable Chassis Numbers:\n");
+    while (temp != NULL) {
+        printf("%s\n", temp->chassisNumber);
+        temp = temp->next;
+    }
+}
+
+
 
 int authenticate(Login logins[], int count) {
     char enteredUser[USERNAME_LEN];

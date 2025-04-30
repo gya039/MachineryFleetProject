@@ -29,9 +29,13 @@ typedef struct Machinery {
     float cost;
     float currentValuation;
     float currentMileage;
+    float nextServiceMileage;
     char ownerName[MAX_STR_LENGTH];
+    char ownerEmail[MAX_STR_LENGTH];
+    char ownerPhoneNumber[MAX_STR_LENGTH];
     struct Machinery* next;
 } Machinery;
+
 
 // Functions
 void clearConsole();
@@ -46,6 +50,12 @@ void getTrimmedInput(const char* prompt, char* buffer, int size);
 Machinery* retrieveMachinery(Machinery* head, const char* chassis);
 void updateMachinery(Machinery* machine);
 void deleteMachinery(Machinery** head, const char* chassis);
+void displayMachineDetails(Machinery* machine);
+void displayChassisNumbers(Machinery* head);
+void validateStringInput(char* input, int maxLength);
+int validateFloatInput(float* input);
+
+
 
 
 #endif
